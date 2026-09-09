@@ -10,7 +10,7 @@ This guide walks through deploying a Wazuh server on WSL (Windows Subsystem for 
 - [Prerequisites](#prerequisites)
 - [Part 1: Install Wazuh on WSL Ubuntu](#part-1-install-wazuh-on-wsl-ubuntu)
 - [Part 2: Put VMware Agent VMs on the Host-Only Network](#part-2-put-vmware-agent-vms-on-the-host-only-network)
-- [Part 3: Set Up Automatic Port Forwarding (Replaces Static IP)](#part-3-set-up-automatic-port-forwarding-replaces-static-ip)
+- [Part 3: Set Up Automatic Port Forwarding](#part-3-set-up-automatic-port-forwarding)
 - [Part 4: Access the Wazuh Dashboard](#part-4-access-the-wazuh-dashboard)
 - [Part 5: Enroll a New Agent](#part-5-enroll-a-new-agent)
 - [Troubleshooting](#troubleshooting)
@@ -47,14 +47,6 @@ WSL can stay on its default NAT networking — no custom `.wslconfig` networking
    memory=6GB
    processors=4
    swap=4GB
-   ```
-
-   Remove any leftover static IP config inside WSL:
-
-   ```bash
-   sudo rm -f /etc/systemd/network/10-eth0.network
-   sudo systemctl disable --now set-static-ip.service 2>/dev/null
-   sudo systemctl restart systemd-networkd
    ```
 
    Restart WSL:
@@ -106,9 +98,9 @@ WSL can stay on its default NAT networking — no custom `.wslconfig` networking
 
    This will typically show `192.168.186.1` — adjust the rest of this guide if yours differs.
 
-## Part 3: Set Up Automatic Port Forwarding (Replaces Static IP)
+## Part 3: Set Up Automatic Port Forwarding
 
-This replaces the old "Part 5: Set a Static IP for WSL" step entirely. Instead of pinning WSL's own IP (which was unreliable), we forward the required Wazuh ports from the fixed VMware host-only IP to WSL's current IP, and refresh that mapping automatically on every login.
+Instead of pinning WSL's own IP (which is unreliable), we forward the required Wazuh ports from the fixed VMware host-only IP to WSL's current IP, and refresh that mapping automatically on every login.
 
 1. Create the forwarding script (run PowerShell **as Administrator**):
 
