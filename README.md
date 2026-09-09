@@ -77,6 +77,8 @@ WSL can stay on its default NAT networking — no custom `.wslconfig` networking
    sudo tar -O -xvf wazuh-install-files.tar wazuh-install-files/wazuh-passwords.txt
    ```
 
+   ![WSL Ubuntu](files/wsl.png)
+
 ## Part 2: Put VMware Agent VMs on the Host-Only Network
 
 1. In VMware Workstation, open each agent VM's **Settings → Network Adapter**.
@@ -190,6 +192,8 @@ Log in with:
 - **Username:** `admin`
 - **Password:** from `wazuh-passwords.txt` (see Part 1, step 3)
 
+![Wazuh dashboard showing active agent](files/dashboard.png)
+
 ## Part 5: Enroll a New Agent
 
 Point agents at the fixed VMware host-only IP — never at WSL's own changing IP.
@@ -204,6 +208,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable wazuh-agent
 sudo systemctl start wazuh-agent
 ```
+![Wazuh agent log showing successful scans](files/ubuntu.png)
 
 **Windows 10 agent VM:** In the Wazuh dashboard's **Deploy new agent** wizard, enter `192.168.186.1` as the server address and follow the generated install command.
 
